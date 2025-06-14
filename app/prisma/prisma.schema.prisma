@@ -1,0 +1,28 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider             = "prisma-client-py"
+    recursive_type_depth = 5
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model Producto {
+    id          Int     @id @default(autoincrement())
+    codigo      String  @unique @db.VarChar(5)
+    nombre      String  @db.VarChar(50)
+    descripcion String  @db.Text
+    cantidad    Decimal @db.Decimal(10, 0)
+    precio      Decimal @db.Decimal(10, 0)
+    impuesto    Decimal @db.Decimal(10, 0)
+    imagen_url  String? @db.VarChar(255)
+    created_at  DateTime @default(now())
+    updated_at  DateTime @updatedAt
+
+    @@map("productos")
+    @@index([codigo])
+}
