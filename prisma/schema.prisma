@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider             = "prisma-client-py"
+    recursive_type_depth = 5
+    binaryTargets = ["native"]
+}
+
+datasource db {
+    provider = "mysql"
+    url      = "mysql://flutterdb:123456@localhost:3306/flutterdb"
+}
+
+model Producto {
+    id          Int     @id @default(autoincrement())
+    codigo      String  @unique @db.VarChar(5)
+    nombre      String  @db.VarChar(50)
+    descripcion String  @db.Text
+    cantidad    Int     @db.Int
+    precio      Int     @db.Int
+    impuesto    Int     @db.Int
+    imagen_url  String? @db.VarChar(255)
+    created_at  DateTime @default(now())
+    updated_at  DateTime @updatedAt
+
+    @@map("productos")
+    @@index([codigo])
+}
