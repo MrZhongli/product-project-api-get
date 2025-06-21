@@ -1,5 +1,5 @@
 from prisma import Prisma
-from typing import List, Optional
+from typing import List
 from ..schemas.raza import RazaCreate, RazaUpdate, RazaResponse, RazaWithAnimalsResponse
 from ..utils.exceptions import NotFoundError, AlreadyExistsError, ValidationError
 import logging

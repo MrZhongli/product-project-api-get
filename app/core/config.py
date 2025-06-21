@@ -1,9 +1,10 @@
 from pydantic_settings import BaseSettings
+from pydantic import Field
 from typing import Optional
 
 class Settings(BaseSettings):
     # Database
-    database_url: str
+    database_url: str = Field(..., alias="DATABASE_URL")
     
     # API Info
     api_title: str = "Animal Management API"
@@ -18,9 +19,14 @@ class Settings(BaseSettings):
     # Environment
     environment: str = "development"
     debug: bool = True
-    
+
+    # Upload
+    upload_dir: str = Field(..., alias="UPLOAD_DIR")
+    max_file_size: int = Field(..., alias="MAX_FILE_SIZE")
+
     class Config:
         env_file = ".env"
         case_sensitive = False
+        extra = "forbid"
 
 settings = Settings()

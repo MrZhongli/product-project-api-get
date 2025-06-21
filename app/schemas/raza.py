@@ -15,15 +15,16 @@ class RazaUpdate(BaseModel):
 
 class RazaResponse(RazaBase):
     """Esquema de respuesta para Raza"""
-    cod_raza: str
-    
+    cod_raza: str = Field(..., alias="codRaza")
+
     class Config:
         from_attributes = True
+        populate_by_name = True
 
 class RazaWithAnimalsResponse(RazaResponse):
     """Esquema de respuesta para Raza con sus animales"""
     total_animales: int = 0
-    
+
 class RazaListResponse(BaseModel):
     """Esquema para lista de razas"""
     razas: List[RazaResponse]
