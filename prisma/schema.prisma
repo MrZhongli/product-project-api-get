@@ -1,0 +1,34 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-py"
+  interface = "asyncio"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Raza {
+  codRaza     String    @id @map("CodRaza") @db.VarChar(50)
+  descripcion String    @map("Descripcion") @db.VarChar(255)
+  animales    Animal[]
+  
+  @@map("Razas")
+}
+
+model Animal {
+  codAnimal    String  @id @map("CodAnimal") @db.VarChar(50)
+  descripcion  String  @map("Descripcion") @db.VarChar(255)
+  sexo         String  @map("Sexo") @db.VarChar(10)
+  edad         Int     @map("Edad")
+  codRaza      String  @map("CodRaza") @db.VarChar(50)
+  colorPelaje  String  @map("ColorPelaje") @db.VarChar(100)
+  colorOjos    String  @map("Color Ojos") @db.VarChar(100)
+  
+  raza         Raza    @relation(fields: [codRaza], references: [codRaza], onDelete: Restrict, onUpdate: Cascade)
+  
+  @@map("Animales")
+}
