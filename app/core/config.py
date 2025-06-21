@@ -1,14 +1,26 @@
-# app/core/config.py
 from pydantic_settings import BaseSettings
+from typing import Optional
 
 class Settings(BaseSettings):
-    database_url: str = "mysql://flutterdb:123456@localhost:3306/flutterdb"
-    upload_dir: str = "app/uploads/images"
-    max_file_size: int = 5 * 1024 * 1024  # 5MB
-    allowed_image_types: list = ["image/jpeg", "image/png", "image/jpg"]
+    # Database
+    database_url: str
+    
+    # API Info
+    api_title: str = "Animal Management API"
+    api_description: str = "API para gestión de animales y razas - Grupo Rafael Moreno"
+    api_version: str = "1.0.0"
+    
+    # CORS
+    cors_origins: list[str] = ["*"]
+    cors_methods: list[str] = ["*"]
+    cors_headers: list[str] = ["*"]
+    
+    # Environment
+    environment: str = "development"
+    debug: bool = True
     
     class Config:
         env_file = ".env"
+        case_sensitive = False
 
 settings = Settings()
-

@@ -2,28 +2,33 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider             = "prisma-client-py"
-    recursive_type_depth = 5
-    binaryTargets = ["native"]
+  provider = "prisma-client-py"
+  interface = "asyncio"
 }
 
 datasource db {
-    provider = "mysql"
-    url      = "mysql://flutterdb:123456@localhost:3306/flutterdb"
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
-model Producto {
-    id          Int     @id @default(autoincrement())
-    codigo      String  @unique @db.VarChar(5)
-    nombre      String  @db.VarChar(50)
-    descripcion String  @db.Text
-    cantidad    Int     @db.Int
-    precio      Int     @db.Int
-    impuesto    Int     @db.Int
-    imagen_url  String? @db.VarChar(255)
-    created_at  DateTime @default(now())
-    updated_at  DateTime @updatedAt
+model Raza {
+  codRaza     String    @id @map("CodRaza") @db.VarChar(50)
+  descripcion String    @map("Descripcion") @db.VarChar(255)
+  animales    Animal[]
+  
+  @@map("Razas")
+}
 
-    @@map("productos")
-    @@index([codigo])
+model Animal {
+  codAnimal    String  @id @map("CodAnimal") @db.VarChar(50)
+  descripcion  String  @map("Descripcion") @db.VarChar(255)
+  sexo         String  @map("Sexo") @db.VarChar(10)
+  edad         Int     @map("Edad")
+  codRaza      String  @map("CodRaza") @db.VarChar(50)
+  colorPelaje  String  @map("ColorPelaje") @db.VarChar(100)
+  colorOjos    String  @map("Color Ojos") @db.VarChar(100)
+  
+  raza         Raza    @relation(fields: [codRaza], references: [codRaza], onDelete: Restrict, onUpdate: Cascade)
+  
+  @@map("Animales")
 }
