@@ -10,6 +10,7 @@ class AnimalBase(BaseModel):
     cod_raza: str = Field(..., min_length=1, max_length=50, description="Código de la raza", alias="codRaza")
     color_pelaje: str = Field(..., min_length=1, max_length=100, description="Color del pelaje", alias="colorPelaje")
     color_ojos: str = Field(..., min_length=1, max_length=100, description="Color de los ojos", alias="colorOjos")
+    image: Optional[str] = Field(None, max_length=500, description="URL o path de la imagen del animal")
 
 class AnimalCreate(AnimalBase):
     """Esquema para crear un animal"""
@@ -23,19 +24,20 @@ class AnimalUpdate(BaseModel):
     cod_raza: Optional[str] = Field(None, min_length=1, max_length=50, alias="codRaza")
     color_pelaje: Optional[str] = Field(None, min_length=1, max_length=100, alias="colorPelaje")
     color_ojos: Optional[str] = Field(None, min_length=1, max_length=100, alias="colorOjos")
+    image: Optional[str] = Field(None, max_length=500, description="URL o path de la imagen del animal")
 
 class AnimalResponse(AnimalBase):
     """Esquema de respuesta para Animal"""
     cod_animal: str = Field(..., alias="codAnimal")
-    raza: Optional[RazaResponse] = None
-    
+    raza: Optional["RazaResponse"] = None
+
     class Config:
         from_attributes = True
         populate_by_name = True
 
 class AnimalListResponse(BaseModel):
     """Esquema para lista de animales"""
-    animals: list[AnimalResponse]
+    animales: list[AnimalResponse]
     total: int
     page: int
     size: int

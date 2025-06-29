@@ -15,20 +15,21 @@ model Raza {
   codRaza     String    @id @map("CodRaza") @db.VarChar(50)
   descripcion String    @map("Descripcion") @db.VarChar(255)
   animales    Animal[]
-  
+
   @@map("Razas")
 }
 
 model Animal {
-  codAnimal    String  @id @map("CodAnimal") @db.VarChar(50)
-  descripcion  String  @map("Descripcion") @db.VarChar(255)
-  sexo         String  @map("Sexo") @db.VarChar(10)
-  edad         Int     @map("Edad")
-  codRaza      String  @map("CodRaza") @db.VarChar(50)
-  colorPelaje  String  @map("ColorPelaje") @db.VarChar(100)
-  colorOjos    String  @map("Color Ojos") @db.VarChar(100)
-  
-  raza         Raza    @relation(fields: [codRaza], references: [codRaza], onDelete: Restrict, onUpdate: Cascade)
-  
+  codAnimal   String  @id @map("CodAnimal") @db.VarChar(50)
+  descripcion String  @map("Descripcion") @db.VarChar(255)
+  sexo        String  @map("Sexo") @db.VarChar(10)
+  edad        Int     @map("Edad")
+  codRaza     String  @map("CodRaza") @db.VarChar(50)
+  colorPelaje String  @map("ColorPelaje") @db.VarChar(100)
+  colorOjos   String  @map("Color ojos") @db.VarChar(100)
+  image       String? @map("Image") @db.VarChar(500)  // Nuevo campo para imagen
+
+  raza        Raza    @relation(fields: [codRaza], references: [codRaza], onDelete: Restrict, onUpdate: Cascade)
+
   @@map("Animales")
 }
